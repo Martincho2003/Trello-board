@@ -4,6 +4,8 @@ import { Board } from './Components/Board';
 import { Login } from './Components/Login';
 import './App.css';
 import { useState, useEffect } from 'react';
+import { Home } from './Components/Home';
+import { Boards } from './Components/Boards';
 
 function App() {
   let applicationState = JSON.parse(localStorage.getItem('appState'))
@@ -18,14 +20,14 @@ function App() {
           }
         }
       }],
-      currentBoard: 0,
+      currentBoard: null,
       selectedCard: null
     }
   }
   const [appState, setAppState] = useState(applicationState);
 
   useEffect(() => {
-    localStorage.setItem('appState', JSON.stringify(appState));
+    localStorage.setItem('appState', JSON.stringify(appState)); 
   }, [appState]);
 
   const navigate = useNavigate();
@@ -39,7 +41,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' element={<Board appState={appState} setAppState={setAppState} />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/dashboards' element={<Boards appState={appState} setAppState={setAppState} />} />
+        {/* <Route path='/' element={<Board appState={appState} setAppState={setAppState} />} /> */}
         <Route path='login' element={<Login />} />
       </Routes>
     </div>
