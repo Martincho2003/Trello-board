@@ -26,7 +26,7 @@ export function Boards({ appState, setAppState }) {
     <div>
       <tbody>
         {boards.map(board => (
-          <button key={board} onClick={() => changeCurrentBoard(board.name)}>{board.name}</button>
+          <button key={board.name} onClick={() => changeCurrentBoard(board.name)}>{board.name}</button>
         ))}
       </tbody>
     </div>

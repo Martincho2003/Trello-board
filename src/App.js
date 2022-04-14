@@ -11,15 +11,7 @@ function App() {
   let applicationState = JSON.parse(localStorage.getItem('appState'))
   if (!applicationState) {
     applicationState = {
-      boards: [{
-        name: "Selenium dashboard",
-        columns: {
-          name: "Todo",
-          items: {
-
-          }
-        }
-      }],
+      boards: [],
       currentBoard: null,
       selectedCard: null
     }
@@ -27,6 +19,9 @@ function App() {
   const [appState, setAppState] = useState(applicationState);
 
   useEffect(() => {
+    if (!name) {
+      navigate('/login');
+    }
     localStorage.setItem('appState', JSON.stringify(appState)); 
   }, [appState]);
 
@@ -34,14 +29,11 @@ function App() {
 
   const name = localStorage.getItem('username');
 
-  if (!name) {
-    navigate('/login');
-  }
 
   return (
     <div className="App">
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home appState={appState} setAppState={setAppState} />} />
         <Route path='/dashboards' element={<Boards appState={appState} setAppState={setAppState} />} />
         {/* <Route path='/' element={<Board appState={appState} setAppState={setAppState} />} /> */}
         <Route path='login' element={<Login />} />
