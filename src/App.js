@@ -1,11 +1,11 @@
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { Board } from './Components/Board';
 import { Login } from './Components/Login';
-import './App.css';
 import { useState, useEffect } from 'react';
-import { Home } from './Components/Home';
+import { NavBar } from './Components/NavBar';
 import { Boards } from './Components/Boards';
+import './App.css';
 
 function App() {
   let applicationState = JSON.parse(localStorage.getItem('appState'))
@@ -17,6 +17,8 @@ function App() {
     }
   }
   const [appState, setAppState] = useState(applicationState);
+  const navigate = useNavigate();
+  const name = localStorage.getItem('username');
 
   useEffect(() => {
     if (!name) {
@@ -25,20 +27,18 @@ function App() {
     localStorage.setItem('appState', JSON.stringify(appState)); 
   }, [appState]);
 
-  const navigate = useNavigate();
-
-  const name = localStorage.getItem('username');
-
-
   return (
-    <div className="App">
+
+    <div>
+      <NavBar appState={appState} setAppState={setAppState}/>
       <Routes>
-        <Route path='/' element={<Home appState={appState} setAppState={setAppState} />} />
         <Route path='/dashboards' element={<Boards appState={appState} setAppState={setAppState} />} />
         <Route path='/dashboard' element={<Board appState={appState} setAppState={setAppState} />} />
-        <Route path='login' element={<Login />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
+      
     </div>
+
   );
 }
 
