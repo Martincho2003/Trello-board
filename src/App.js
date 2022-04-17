@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home appState={appState} setAppState={setAppState} />} />
         <Route path='/dashboards' element={<Boards appState={appState} setAppState={setAppState} />} />
-        {/* <Route path='/' element={<Board appState={appState} setAppState={setAppState} />} /> */}
+        <Route path='/dashboard' element={<Board appState={appState} setAppState={setAppState} />} />
         <Route path='login' element={<Login />} />
       </Routes>
     </div>

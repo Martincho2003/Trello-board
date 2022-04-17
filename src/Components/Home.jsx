@@ -7,8 +7,6 @@ export function Home({ appState, setAppState}) {
 
   let newName = '';
 
-  console.log(boards);
-
   function changeName(name){
    let letter = name.nativeEvent.data
     if(letter){
@@ -19,6 +17,7 @@ export function Home({ appState, setAppState}) {
   }
 
   function addDashboard() {
+    console.log("creating a dashboard")
     let newDashboard = {
         name: newName,
         columns: []

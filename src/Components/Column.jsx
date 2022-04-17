@@ -1,11 +1,10 @@
 import React from "react";
 
-const Column = ({ isOver, children }) => {
-    const className = isOver ? " highlight-region" : "";
+const Column = ({ appState, setAppState }) => {
 
     return (
-        <div className={`col${className}`}>
-            {children}
+        <div className='col'>
+            
         </div>
     );
 };

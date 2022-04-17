@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 export function Boards({ appState, setAppState }) {
   const [boards, setBoards] = useState(appState.boards);
@@ -13,7 +14,10 @@ export function Boards({ appState, setAppState }) {
         break;
       }
     }
+    navigate('/dashboard')
   }
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     setAppState({

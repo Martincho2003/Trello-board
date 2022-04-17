@@ -1,18 +1,47 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Popup from 'reactjs-popup';
+import Column from "./Column";
 
 export function Board({ appState, setAppState }) {
   const [board, setBoard] = useState(appState.boards[appState.currentBoard]);
 
-  useEffect(() => {
+  let newName = '';
+
+  function changeName(name){
+   let letter = name.nativeEvent.data
+    if(letter){
+      newName += name.nativeEvent.data
+    } else {
+      newName = newName.slice(0, -1);
+    }
+  }
+
+  function addColumn() {
+    let newColumn = {
+        name: newName,
+        items: []
+        }
+    board.columns.push(newColumn);
     setAppState({
       ...appState, 
       boards: [...appState.boards, board]
     })
-  }, [setBoard])
-  
-  return (
-    <div className="board">
-        <p>{ board.name }</p>
+  }
+
+  return(
+    <div>
+      <p>{ board.name }</p>
+      <Popup trigger={<button>Add column</button>} position="right center">
+        <input type="text" onChange={(name) => changeName(name)} />
+        <button onClick={addColumn}>Add</button>
+      </Popup>
+      <div style={{display: "flex", flexFlow: "row", justifyContent: "space-between"}}>
+        <tbody>
+          {board.columns.map(column =>
+            <p>{column.name}</p>
+          )}
+        </tbody>
+      </div>
     </div>
   )
 }
