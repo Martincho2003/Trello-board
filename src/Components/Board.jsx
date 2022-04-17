@@ -24,9 +24,11 @@ export function Board({ appState, setAppState }) {
     board.columns.push(newColumn);
     setAppState({
       ...appState, 
-      boards: [...appState.boards, board]
+      boards: [...appState.boards]
     })
   }
+
+  
 
   return(
     <div>
@@ -35,10 +37,10 @@ export function Board({ appState, setAppState }) {
         <input type="text" onChange={(name) => changeName(name)} />
         <button onClick={addColumn}>Add</button>
       </Popup>
-      <div style={{display: "flex", flexFlow: "row", justifyContent: "space-between"}}>
+      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
         <tbody>
-          {board.columns.map(column =>
-            <p>{column.name}</p>
+          {board.columns.map((column, key) =>
+            <Column appState={appState} setAppState={setAppState} id={key} />
           )}
         </tbody>
       </div>
