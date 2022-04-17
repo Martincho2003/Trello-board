@@ -1,45 +1,105 @@
-import { Route, Routes } from 'react-router-dom';
-import { useNavigate } from 'react-router';
-import { Board } from './Components/Board';
-import { Login } from './Components/Login';
-import './App.css';
-import { useState, useEffect } from 'react';
-import { Home } from './Components/Home';
-import { Boards } from './Components/Boards';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import dataset from './dataset'
+import Column from './Components/Column'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
-function App() {
-  let applicationState = JSON.parse(localStorage.getItem('appState'))
-  if (!applicationState) {
-    applicationState = {
-      boards: [],
-      currentBoard: null,
-      selectedCard: null
+const Container = styled.div`
+    display : flex;
+`
+
+const App = () => {
+  const [data, setData] = useState(dataset)
+
+  const onDragEnd = result => {
+    const { destination, source, draggableId, type } = result;
+    //If there is no destination
+    if (!destination) {return}
+    
+    //If source and destination is the same
+    if (destination.droppableId === source.droppableId && destination.index === source.index) { return }
+    
+    //If you're dragging columns
+    if (type === 'column') {
+        const newColumnOrder = Array.from(data.columnOrder);
+        newColumnOrder.splice(source.index, 1);
+        newColumnOrder.splice(destination.index, 0, draggableId);
+        const newState = {
+            ...data,
+            columnOrder: newColumnOrder
+        }
+        setData(newState)
+        return;
     }
-  }
-  const [appState, setAppState] = useState(applicationState);
 
-  useEffect(() => {
-    if (!name) {
-      navigate('/login');
+    //Anything below this happens if you're dragging tasks
+    const start = data.columns[source.droppableId];
+    const finish = data.columns[destination.droppableId];
+
+    //If dropped inside the same column
+    if (start === finish) {
+        const newTaskIds = Array.from(start.taskIds);
+        newTaskIds.splice(source.index, 1);
+        newTaskIds.splice(destination.index, 0, draggableId);
+        const newColumn = {
+            ...start,
+            taskIds: newTaskIds
+        }
+        const newState = {
+            ...data,
+            columns: {
+                ...data.columns,
+                [newColumn.id]: newColumn
+            }
+        }
+        setData(newState)
+        return;
     }
-    localStorage.setItem('appState', JSON.stringify(appState)); 
-  }, [appState]);
 
-  const navigate = useNavigate();
+    //If dropped in a different column
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+        ...start,
+        taskIds: startTaskIds
+    }
+    
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+        ...finish,
+        taskIds: finishTaskIds
+    }
 
-  const name = localStorage.getItem('username');
+    const newState = {
+        ...data,
+        columns: {
+            ...data.columns,
+            [newStart.id]: newStart,
+            [newFinish.id]: newFinish
+        }
+    }
 
-
-  return (
-    <div className="App">
-      <Routes>
-        <Route path='/' element={<Home appState={appState} setAppState={setAppState} />} />
-        <Route path='/dashboards' element={<Boards appState={appState} setAppState={setAppState} />} />
-        <Route path='/dashboard' element={<Board appState={appState} setAppState={setAppState} />} />
-        <Route path='login' element={<Login />} />
-      </Routes>
-    </div>
-  );
+    setData(newState)
 }
 
-export default App;
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId='all-columns' direction='horizontal' type='column'>
+        {(provided) => (
+          <Container {...provided.droppableProps} ref={provided.innerRef}>
+            {data.columnOrder.map((id, index) => {
+              const column = data.columns[id]
+              const tasks = column.taskIds.map(taskId => data.tasks[taskId])
+
+              return <Column key={column.id} column={column} tasks={tasks} index={index} />
+            })}
+            {provided.placeholder}
+          </Container>
+        )}
+      </Droppable>
+    </DragDropContext>
+  )
+}
+
+export default App
