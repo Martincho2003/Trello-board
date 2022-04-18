@@ -17,9 +17,7 @@ function App() {
       selectedCard: null
     }
   }
-
-  //applicationState.recents.push();
-
+  
   const [appState, setAppState] = useState(applicationState);
   const navigate = useNavigate();
   const name = localStorage.getItem('username');

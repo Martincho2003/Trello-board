@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Draggable } from 'react-beautiful-dnd'
 const Container = styled.div`
@@ -8,9 +8,14 @@ const Container = styled.div`
     border-radius:2px;
     background-color:${props => (props.isDragging ? 'lightgreen' : 'white')};
 `
-function Task(props) {
-    return (
-        <Draggable draggableId={props.task.id} index={props.index}>
+function Task({appState, currentColumn, currentTask}) {
+
+    const [item, setItem] = useState(appState.boards[appState.currentBoard].columns[currentColumn].items[currentTask])
+
+    function rend() {
+        if (item) {
+            return (
+            <Draggable draggableId={item.name} index={currentTask}>
             {(provided, snapshot) => (
                 <Container
                     {...provided.draggableProps}
@@ -18,11 +23,17 @@ function Task(props) {
                     ref={provided.innerRef}
                     isDragging={snapshot.isDragging}
                 >
-                    {props.task.content}
+                    {item.name}
                 </Container>
             )}
         </Draggable>
-    )
+            )
+        } else {
+            return (<div></div>)
+        }
+    }
+
+    return rend()
 }
 
 export default Task

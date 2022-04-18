@@ -33,7 +33,7 @@ function Column({appState, currentColumn, setAppState}) {
                     ref={provided.innerRef}
                     {...provided.draggableProps}>
                     <Title {...provided.dragHandleProps}>{column.name}</Title>
-                    <AddItem appState={appState} setAppState={setAppState} />
+                    <AddItem appState={appState} setAppState={setAppState} id={currentColumn}/>
                     <Droppable droppableId={column.name} type='task'>
                         {(provided, snapshot) => (
                             <TaskList
@@ -41,8 +41,7 @@ function Column({appState, currentColumn, setAppState}) {
                                 {...provided.droppableProps}
                                 isDraggingOver={snapshot.isDraggingOver}
                             >
-                                {column.items.map((item, index) => <Task key={item.name} task={item} index={index} />)}
-                                {provided.placeholder}
+                                {column.items.map((item, index) => <Task appState={appState} currentColumn={currentColumn} currentTask={index} />)}
                             </TaskList>
                         )}
                     </Droppable>
