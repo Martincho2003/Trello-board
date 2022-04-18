@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Task from './Task'
+import { AddItem } from './AddItem'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 const Container = styled.div`
     margin: 8px;
@@ -20,7 +21,7 @@ const TaskList = styled.div`
     min-height:100px;
 `;
 
-function Column({appState, currentColumn}) {
+function Column({appState, currentColumn, setAppState}) {
     const [column, setColumn] = useState(appState.boards[appState.currentBoard].columns[currentColumn])
 
     function rend(){
@@ -32,6 +33,7 @@ function Column({appState, currentColumn}) {
                     ref={provided.innerRef}
                     {...provided.draggableProps}>
                     <Title {...provided.dragHandleProps}>{column.name}</Title>
+                    <AddItem appState={appState} setAppState={setAppState} />
                     <Droppable droppableId={column.name} type='task'>
                         {(provided, snapshot) => (
                             <TaskList

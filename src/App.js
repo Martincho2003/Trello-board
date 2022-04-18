@@ -11,6 +11,7 @@ function App() {
   if (!applicationState) {
     applicationState = {
       boards: [],
+      recentItems: [],
       currentBoard: null,
       selectedCard: null
     }

@@ -105,7 +105,7 @@ export function Board({ appState, setAppState }) {
             <Container {...provided.droppableProps} ref={provided.innerRef}>
 
               {board.columns.map((column, key) => {
-                return <Column appState={appState} currentColumn={key} />
+                return <Column appState={appState} currentColumn={key} setAppState={setAppState}/>
               })}
               {provided.placeholder}
             </Container>

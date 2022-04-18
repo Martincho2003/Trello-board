@@ -11,7 +11,6 @@ export function AddBoard({ appState, setAppState}) {
     let newDescription = ''
 
     function addDashboard() {
-    console.log("creating a dashboard")
     let newDashboard = {
         name: newName,
         columns: []
