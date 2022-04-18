@@ -33,11 +33,8 @@ export function AddItem({ appState, setAppState, id }) {
     }
     const formSubmit = (e) => {
         e.preventDefault();
-        console.log(1)
         addItem();
-        console.log(2)
         handleClose();
-        console.log(3)
     }
     
     return (

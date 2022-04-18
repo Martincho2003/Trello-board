@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Task from './Task'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
@@ -20,22 +20,26 @@ const TaskList = styled.div`
     min-height:100px;
 `;
 
-function Column(props) {
-    return (
-        <Draggable draggableId={props.column.id} index={props.index}>
+function Column({appState, currentColumn}) {
+    const [column, setColumn] = useState(appState.boards[appState.currentBoard].columns[currentColumn])
+
+    function rend(){
+        if (column){
+            return (
+                <Draggable draggableId={column.name} index={currentColumn}>
             {(provided) => (
                 <Container
                     ref={provided.innerRef}
                     {...provided.draggableProps}>
-                    <Title {...provided.dragHandleProps}>{props.column.title}</Title>
-                    <Droppable droppableId={props.column.id} type='task'>
+                    <Title {...provided.dragHandleProps}>{column.name}</Title>
+                    <Droppable droppableId={column.name} type='task'>
                         {(provided, snapshot) => (
                             <TaskList
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                                 isDraggingOver={snapshot.isDraggingOver}
                             >
-                                {props.tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
+                                {column.items.map((item, index) => <Task key={item.name} task={item} index={index} />)}
                                 {provided.placeholder}
                             </TaskList>
                         )}
@@ -44,7 +48,13 @@ function Column(props) {
 
             )}
         </Draggable>
-    )
-}
+            )
+        }
+        else {
+            return (<div></div>)
+        }
+    }
 
+    return rend()
+}
 export default Column

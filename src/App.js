@@ -18,13 +18,15 @@ function App() {
   const [appState, setAppState] = useState(applicationState);
   const navigate = useNavigate();
   const name = localStorage.getItem('username');
-  
+
   useEffect(() => {
     if (!name) {
       navigate('/login');
     }
     localStorage.setItem('appState', JSON.stringify(appState)); 
   }, [appState]);
+
+  //localStorage.clear();
 
   return (
 
