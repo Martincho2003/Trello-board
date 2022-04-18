@@ -35,10 +35,26 @@ const Column = ({ appState, setAppState, id }) => {
 
   function deleteItem(itemTitle){
     const itemColumnId = column.items.indexOf(column.items.find(item => item.name == itemTitle));
-    column.slice(itemColumnId, 1);
+    column.items.slice(itemColumnId, 1);
     if (recentItems.find(item => item.name == itemTitle) != undefined){
       const itemRecentId = recentItems.indexOf(recentItems.find(item => item.name == itemTitle));
       recentItems.slice(itemRecentId, 1);
+    }
+    setAppState({
+      ...appState, 
+      boards: [...appState.boards],
+      recentItems: recentItems
+    })
+  }
+
+  function editItem(oldItemTitle, newItemTitle, itemDescription){
+    const itemColumnId = column.items.indexOf(column.items.find(item => item.name == oldItemTitle));
+    column.items[itemColumnId].name = newItemTitle;
+    column.items[itemColumnId].description = itemDescription;
+    if (recentItems.find(item => item.name == itemTitle) != undefined){
+      const itemRecentId = recentItems.indexOf(recentItems.find(item => item.name == oldItemTitle));
+      recentItems[itemRecentId].name = newItemTitle;
+      recentItems[itemRecentId].description = itemDescription;
     }
     setAppState({
       ...appState, 
