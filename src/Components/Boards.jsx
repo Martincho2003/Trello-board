@@ -30,11 +30,11 @@ export function Boards({ appState, setAppState }) {
   return (
     <div>
       <NavBar appState={appState} setAppState={setAppState}/>
-      <tbody>
+        
         {boards.map(board => (
           <button key={board.name} onClick={() => changeCurrentBoard(board.name)}>{board.name}</button>
         ))}
-      </tbody>
+
     </div>
   )
 }

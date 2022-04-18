@@ -35,6 +35,7 @@ export function AddBoard({ appState, setAppState}) {
     const formSubmit = (e) => {
         e.preventDefault();
         addDashboard();
+        handleClose();
     }
     
     return (

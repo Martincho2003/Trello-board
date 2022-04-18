@@ -1,19 +1,14 @@
-import { useState } from "react";
-import Popup from 'reactjs-popup';
-import { NavBar } from './NavBar';
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import dataset from './dataset'
-import Column from './Column.js'
+import Column from './Column'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 const Container = styled.div`
     display : flex;
 `
 
-
-export function Board({ appState, setAppState }) {
-  const [board, setBoard] = useState(appState.boards[appState.currentBoard]);
-
+const App = () => {
   const [data, setData] = useState(dataset)
 
   const onDragEnd = result => {
@@ -86,65 +81,25 @@ export function Board({ appState, setAppState }) {
     }
 
     setData(newState)
-  }
+}
 
-  let newName = '';
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId='all-columns' direction='horizontal' type='column'>
+        {(provided) => (
+          <Container {...provided.droppableProps} ref={provided.innerRef}>
+            {data.columnOrder.map((id, index) => {
+              const column = data.columns[id]
+              const tasks = column.taskIds.map(taskId => data.tasks[taskId])
 
-  function changeName(name){
-   let letter = name.nativeEvent.data
-    if(letter){
-      newName += name.nativeEvent.data
-    } else {
-      newName = newName.slice(0, -1);
-    }
-  }
-
-  function addColumn() {
-    let newColumn = {
-        name: newName,
-        items: []
-        }
-    board.columns.push(newColumn);
-    setAppState({
-      ...appState, 
-      boards: [...appState.boards]
-    })
-  }
-
-  
-
-  return(
-    <div>
-      <NavBar appState={appState} setAppState={setAppState}/>
-      <p>{ board.name }</p>
-      <Popup trigger={<button>Add column</button>} position="right center">
-        <input type="text" onChange={(name) => changeName(name)} />
-        <button onClick={addColumn}>Add</button>
-      </Popup>
-      <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-        <tbody>
-          {board.columns.map((column, key) =>
-            <Column appState={appState} setAppState={setAppState} id={key} />
-          )}
-        </tbody>
-      </div>
-
-
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='all-columns' direction='horizontal' type='column'>
-          {(provided) => (
-            <Container {...provided.droppableProps} ref={provided.innerRef}>
-              {data.columnOrder.map((id, index) => {
-                const column = data.columns[id]
-                const tasks = column.taskIds.map(taskId => data.tasks[taskId])
-
-                return <Column key={column.id} column={column} tasks={tasks} index={index} />
-              })}
-              {provided.placeholder}
-            </Container>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+              return <Column key={column.id} column={column} tasks={tasks} index={index} />
+            })}
+            {provided.placeholder}
+          </Container>
+        )}
+      </Droppable>
+    </DragDropContext>
   )
 }
+
+export default App
