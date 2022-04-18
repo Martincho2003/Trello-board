@@ -13,6 +13,7 @@ const Container = styled.div`
 
 export function Board({ appState, setAppState }) {
   const [board, setBoard] = useState(appState.boards[appState.currentBoard]);
+  const [recentItems, setRecentItems] = useState(appState.recentItems);
 
   const [data, setData] = useState(dataset)
 
@@ -106,7 +107,17 @@ export function Board({ appState, setAppState }) {
     })
   }
 
-  
+  function deleteColumn(columnName) {
+    const column = board.columns.find(column => column.name == columnName);
+    const columnId = board.columns.indexOf(column);
+    setRecentItems(recentItems.filter( ( elem ) => !board.columns.includes(elem) ));
+    board.columns.slice(columnId, 1);
+    setAppState({
+      ...appState, 
+      boards: [...appState.boards],
+      recentItems: recentItems
+    })
+  }
 
   return(
     <div>
