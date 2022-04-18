@@ -22,13 +22,13 @@ const TaskList = styled.div`
 
 function Column(props) {
     return (
-        <Draggable draggableId={props.column.id} index={props.index}>
+        <Draggable draggableId={props.name} index={props.index}>
             {(provided) => (
                 <Container
                     ref={provided.innerRef}
                     {...provided.draggableProps}>
-                    <Title {...provided.dragHandleProps}>{props.column.title}</Title>
-                    <Droppable droppableId={props.column.id} type='task'>
+                    <Title {...provided.dragHandleProps}>{props.name}</Title>
+                    <Droppable droppableId={props.name} type='task'>
                         {(provided, snapshot) => (
                             <TaskList
                                 ref={provided.innerRef}

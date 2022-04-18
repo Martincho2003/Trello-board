@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup';
 import { NavBar } from './NavBar';
 import styled from 'styled-components'
 import dataset from './dataset'
-import Column from './Column.js'
+import Column from './Column.jsx'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 const Container = styled.div`
@@ -90,13 +90,8 @@ export function Board({ appState, setAppState }) {
 
   let newName = '';
 
-  function changeName(name){
-   let letter = name.nativeEvent.data
-    if(letter){
-      newName += name.nativeEvent.data
-    } else {
-      newName = newName.slice(0, -1);
-    }
+  const changeName = (e) => {
+    newName = e.target.value;
   }
 
   function addColumn() {
@@ -130,7 +125,7 @@ export function Board({ appState, setAppState }) {
       </div>
 
 
-      <DragDropContext onDragEnd={onDragEnd}>
+      {/* <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='all-columns' direction='horizontal' type='column'>
           {(provided) => (
             <Container {...provided.droppableProps} ref={provided.innerRef}>
@@ -144,7 +139,7 @@ export function Board({ appState, setAppState }) {
             </Container>
           )}
         </Droppable>
-      </DragDropContext>
+      </DragDropContext> */}
     </div>
   )
 }

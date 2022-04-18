@@ -4,6 +4,7 @@ import { Button, Modal} from 'react-bootstrap';
 export function AddBoard({ appState, setAppState}) {
 
     const [boards, setBoards] = useState(appState.boards);
+    console.log(boards);
 
     let newName = ''
     let newDescription = ''

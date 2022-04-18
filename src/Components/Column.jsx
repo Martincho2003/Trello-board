@@ -2,30 +2,46 @@ import React, { useState } from "react";
 import Popup from "reactjs-popup";
 
 const Column = ({ appState, setAppState, id }) => {
-  const [column, setColumn] = useState(appState.boards[appState.currentBoard].columns[id])
-  console.log(column);
-  
+  const [column, setColumn] = useState(appState.boards[appState.currentBoard].columns[id]) 
+  const [recentItems, setRecentItems] = useState(appState.recentItems);
 
   let newName = '';
+  let newDescription = "asd";
 
-  function changeName(name){
-   let letter = name.nativeEvent.data
-    if(letter){
-      newName += name.nativeEvent.data
-    } else {
-      newName = newName.slice(0, -1);
+  const changeName = (e) => {
+    newName = e.target.value;
+  }
+
+  function recentItemCheck() {
+    if (recentItems.length == 10){
+      recentItems.pop();
     }
   }
 
   function addItem() {
     let newItem = {
         name: newName,
-        description: ""
+        description: newDescription
         }
     column.items.push(newItem);
+    recentItemCheck();
+    recentItems.unshift(newItem);
     setAppState({
       ...appState, 
-      boards: [...appState.boards]
+      boards: [...appState.boards],
+      recentItems: recentItems
+    })
+  }
+
+  function deleteItem(itemTitle){
+    const itemColumnId = column.indexOf(column.find(item => item.name == itemTitle));
+    const itemRecentId = recentItems.indexOf(recentItems.find(item => item.name == itemTitle));
+    column.slice(itemColumnId, 1);
+    recentItems.slice(itemRecentId, 1);
+    setAppState({
+      ...appState, 
+      boards: [...appState.boards],
+      recentItems: recentItems
     })
   }
 
