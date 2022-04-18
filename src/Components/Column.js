@@ -41,7 +41,7 @@ function Column({appState, currentColumn, setAppState}) {
                                 {...provided.droppableProps}
                                 isDraggingOver={snapshot.isDraggingOver}
                             >
-                                {column.items.map((item, index) => <Task appState={appState} currentColumn={currentColumn} currentTask={index} />)}
+                                {column.items.map((item, index) => <Task appState={appState} setAppState={setAppState} currentColumn={currentColumn} currentTask={index} />)}
                             </TaskList>
                         )}
                     </Droppable>

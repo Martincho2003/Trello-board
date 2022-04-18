@@ -4,9 +4,16 @@ import { Button, Modal} from 'react-bootstrap';
 export function AddItem({ appState, setAppState, id }) {
 
     const [column, setColumn] = useState(appState.boards[appState.currentBoard].columns[id]);
+    const [recentItems, setRecentItems] = useState(appState.recentItems);
 
     let newName = '';
     let newDescription = '';
+
+    function recentItemCheck() {
+        if (recentItems.length == 10){
+          recentItems.pop();
+        }
+      }
 
     function addItem() {
         let newItem = {
@@ -14,11 +21,14 @@ export function AddItem({ appState, setAppState, id }) {
             description: newDescription
             }
         column.items.push(newItem);
+        recentItemCheck();
+        recentItems.unshift(newItem);
         setAppState({
-        ...appState, 
-        boards: [...appState.boards]
+          ...appState, 
+          boards: [...appState.boards],
+          recentItems: recentItems
         })
-    }
+      }
 
     const [show, setShow] = useState(false);
     
