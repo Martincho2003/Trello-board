@@ -100,3 +100,10 @@ body, html, .App, #root, .auth-wrapper {
   margin: 50px 200px ;
 }
 
+.board-name{
+  font-size: 20px;
+  color: whitesmoke;
+  margin-left: 100px;
+  margin-top: 10px;
+}
+
