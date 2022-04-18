@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button, Modal} from 'react-bootstrap';
+import { useNavigate } from "react-router"
 
 export function AddBoard({ appState, setAppState}) {
 
+    const navigate = useNavigate();
     const [boards, setBoards] = useState(appState.boards);
 
     let newName = ''
@@ -36,6 +38,7 @@ export function AddBoard({ appState, setAppState}) {
         e.preventDefault();
         addDashboard();
         handleClose();
+        navigate('/dashboards');
     }
     
     return (

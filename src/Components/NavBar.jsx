@@ -11,9 +11,9 @@ export function NavBar({ appState, setAppState}) {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/">Dashboards</Nav.Link>
+              <Nav.Link href="/dashboards">Dashboards</Nav.Link>
               <Nav.Link href="/">Recently addded tasks</Nav.Link>
-              
+              <Nav.Link href="/login">Login</Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <AddBoard appState={appState} setAppState={setAppState} />

@@ -4,7 +4,7 @@ import { Board } from './Components/Board';
 import { Login } from './Components/Login';
 import { useState, useEffect } from 'react';
 import { Boards } from './Components/Boards';
-import './App.css';
+import { Home } from './Components/Home';
 
 function App() {
   let applicationState = JSON.parse(localStorage.getItem('appState'))
@@ -28,12 +28,13 @@ function App() {
 
   return (
 
-    <div>
+    <div className="app" >
       
       <Routes>
-        <Route path='/' element={<Boards appState={appState} setAppState={setAppState} />} />
+        <Route path='/dashboards' element={<Boards appState={appState} setAppState={setAppState} />} />
         <Route path='/dashboard' element={<Board appState={appState} setAppState={setAppState} />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Home appState={appState} setAppState={setAppState}/>} />
       </Routes>
       
     </div>

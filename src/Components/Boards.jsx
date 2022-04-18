@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { Button, ListGroup} from 'react-bootstrap';
 import { NavBar } from './NavBar';
 
 export function Boards({ appState, setAppState }) {
@@ -30,11 +31,16 @@ export function Boards({ appState, setAppState }) {
   return (
     <div>
       <NavBar appState={appState} setAppState={setAppState}/>
-        
-        {boards.map(board => (
-          <button key={board.name} onClick={() => changeCurrentBoard(board.name)}>{board.name}</button>
-        ))}
 
+          
+      <ListGroup className="my-list">
+        <ListGroup.Item disabled>Your Boards</ListGroup.Item>
+        {boards.map(board => (
+            <ListGroup.Item>
+              <Button className="flex-button" variant="primary" key={board.name} onClick={() => changeCurrentBoard(board.name)}>{board.name}</Button>
+            </ListGroup.Item>
+          ))}
+      </ListGroup>
     </div>
   )
 }
