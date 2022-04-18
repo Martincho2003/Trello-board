@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Popup from 'reactjs-popup';
 import Column from "./Column";
+import { NavBar } from './NavBar';
 
 export function Board({ appState, setAppState }) {
   const [board, setBoard] = useState(appState.boards[appState.currentBoard]);
@@ -32,6 +33,7 @@ export function Board({ appState, setAppState }) {
 
   return(
     <div>
+      <NavBar appState={appState} setAppState={setAppState}/>
       <p>{ board.name }</p>
       <Popup trigger={<button>Add column</button>} position="right center">
         <input type="text" onChange={(name) => changeName(name)} />

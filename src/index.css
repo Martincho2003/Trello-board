@@ -20,6 +20,14 @@ code {
 * {
   box-sizing: border-box;
 }
+.modal_body {
+  background: #1C8EF9 !important;
+  min-height: 40vh;
+  display: flex;
+  font-weight: 400;
+  font-family: 'Fira Sans', sans-serif;
+}
+
 .form_body {
   background: #1C8EF9 !important;
   min-height: 100vh;
@@ -67,3 +75,8 @@ body, html, .App, #root, .auth-wrapper {
 .custom-control-label {
   font-weight: 400;
 }
+
+.modal-content{
+  height: 50%;
+}
+
