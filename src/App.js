@@ -5,6 +5,7 @@ import { Login } from './Components/Login';
 import { useState, useEffect } from 'react';
 import { Boards } from './Components/Boards';
 import { Home } from './Components/Home';
+import { Recents } from './Components/Recents';
 
 function App() {
   let applicationState = JSON.parse(localStorage.getItem('appState'))
@@ -16,6 +17,9 @@ function App() {
       selectedCard: null
     }
   }
+
+  //applicationState.recents.push();
+
   const [appState, setAppState] = useState(applicationState);
   const navigate = useNavigate();
   const name = localStorage.getItem('username');
@@ -38,6 +42,7 @@ function App() {
         <Route path='/dashboard' element={<Board appState={appState} setAppState={setAppState} />} />
         <Route path='/login' element={<Login />} />
         <Route path='/' element={<Home appState={appState} setAppState={setAppState}/>} />
+        <Route path='/recents' element={<Recents appState={appState} setAppState={setAppState}/>} />
       </Routes>
       
     </div>
